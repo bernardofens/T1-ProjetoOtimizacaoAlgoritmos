@@ -1,4 +1,4 @@
-import util.Scanner;
+import java.util.Scanner;
 
 public class Main {
 
@@ -8,7 +8,7 @@ public class Main {
 
         System.out.println("Hello World!");
 
-        s.close()
+        s.close();
 
     }
 
