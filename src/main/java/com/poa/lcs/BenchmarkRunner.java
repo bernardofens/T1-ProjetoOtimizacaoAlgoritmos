@@ -1,33 +1,28 @@
-package com.poa.lcs;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+package com.poa.lcs; //pacote com a classe BenchmarkRunner
+import java.io.IOException; 
+import java.nio.charset.StandardCharsets; 
+import java.nio.file.Files; //classe para manipular arquivos
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-
-/* benchmark runner
-   esta classe organiza uma bateria de casos
-   para cada caso ela executa lcs recursivo lcs dp e lcs memo
-   depois imprime uma tabela no terminal
-   se o usuario pedir ela tambem grava um csv em results */
+import java.util.ArrayList; //lista de casos
+import java.util.List; //lista de resultados
+import java.util.Locale; //localizacao
+import java.util.Objects; //objetos
+//benchmark runner -> classe que organiza uma bateria de casos para testar os algoritmos
+   //esta classe organiza uma bateria de casos
+   //para cada caso ela executa lcs recursivo lcs dp e lcs memo
+   //depois imprime uma tabela no terminal
+   //se o usuario pedir ela tambem grava um csv em results
 public final class BenchmarkRunner {
-
-    /* limiar de seguranca para nao chamar o recursivo em entradas grandes
-       quando o tamanho total excede esse valor o recursivo e mostrado como n a */ 
+    //limiar de seguranca para nao chamar o recursivo em entradas grandes
+       //quando o tamanho total excede esse valor o recursivo e mostrado como n/a
     public static final int RECURSIVE_MAX_SUM_LENGTH = 25;
-
-    /* estrutura para guardar um caso de teste
-       name e um texto para identificar
-       s1 e s2 sao as duas strings que serao comparadas */ 
+    //estrutura para guardar um caso de teste
+    //name e um texto para identificar
+    //s1 e s2 sao as duas strings que serao comparadas
     public record Case(String name, String s1, String s2) {
     }
-
-    /* estrutura para uma linha de resultados do benchmark
-       cada campo guarda um dado para imprimir e salvar no csv */ 
+    //estrutura para uma linha de resultados do benchmark
+   //cada cam   po guarda um dado para imprimir e salvar no csv
     public record Row(
             String name,
             int len1,
@@ -41,14 +36,12 @@ public final class BenchmarkRunner {
             String memoOps
     ) {
     }
-
-    /* construtor privado
-       this e utilitaria e evita instanciacao acidental */ 
+    //construtor privado
+    //this e utilitaria e evita instanciacao acidental
     private BenchmarkRunner() {
     }
-
-    /* retorna uma lista fixa de casos
-       serve para executar sem precisar passar argumentos na linha de comando */ 
+    //retorna uma lista fixa de casos
+       //serve para executar sem precisar passar argumentos na linha de comando 
     public static List<Case> defaultCases() {
         List<Case> list = new ArrayList<>();
         list.add(new Case("classico", "ABCBDAB", "BDCABA"));
@@ -60,80 +53,71 @@ public final class BenchmarkRunner {
         list.add(new Case("tema", "programacao", "dinamica"));
         return list;
     }
-
-    /* executa todos os casos recebidos e devolve uma lista de linhas
-       ops e um contador reutilizavel para economizar objetos */ 
+    //executa todos os casos recebidos e devolve uma lista de linhas
+       //ops e um contador reutilizavel para economizar objetos 
     public static List<Row> runCases(Iterable<Case> cases) {
         List<Row> rows = new ArrayList<>();
         OperationCounter ops = new OperationCounter();
         for (Case c : cases) {
-            /* runsingle calcula uma linha completa para o caso atual */ 
+            //runsingle calcula uma linha completa para o caso atual 
             rows.add(runSingle(c, ops));
         }
         return rows;
     }
-
-    /* calcula a linha de resultados de um caso
-       a funcao mede tempo com nanotime e usa ops para contar eventos */ 
+    //calcula a linha de resultados de um caso
+    //a funcao mede tempo com nanotime e usa ops para contar eventos 
     static Row runSingle(Case c, OperationCounter ops) {
         String s1 = c.s1();
         String s2 = c.s2();
-
-        /* m e n sao os tamanhos das strings
-           isso ajuda a decidir se o recursivo pode ser executado */ 
+        //m e n sao os tamanhos das strings
+        //isso ajuda a decidir se o recursivo pode ser executado 
         int m = s1.length();
         int n = s2.length();
-
-        /* calcula dp primeiro
-           dp e sempre executado porque tem complexidade previsivel */ 
+        //calcula dp primeiro
+        //dp e sempre executado porque tem complexidade previsivel 
         ops.reset();
         long t0 = System.nanoTime();
         int lenDp = LcsAlgorithms.lcsDp(s1, s2, ops);
         long nanosDp = System.nanoTime() - t0;
         long opsDp = ops.get();
-
-        /* calcula memo segundo
-           memo deve devolver a mesma lcs comprimento que dp */ 
+        //calcula memo segundo
+        //memo deve devolver a mesma lcs comprimento que dp 
         ops.reset();
         t0 = System.nanoTime();
         int lenMemo = LcsAlgorithms.lcsMemo(s1, s2, ops);
         long nanosMemo = System.nanoTime() - t0;
         long opsMemo = ops.get();
-
-        /* validacao de consistencia
-           se dp e memo divergem entao ha um erro logico */ 
+        //validacao de consistencia
+        //se dp e memo divergem entao ha um erro logico 
         if (lenMemo != lenDp) {
             throw new IllegalStateException("lcs dp e memo divergem no caso " + c.name());
         }
-
-        /* estes campos serao preenchidos depois
-           recursivo pode ficar como n a dependendo do tamanho */ 
+        //estes campos serao preenchidos depois
+        //recursivo pode ficar como n a dependendo do tamanho 
         String recTime;
         String recOps;
         if (m + n <= RECURSIVE_MAX_SUM_LENGTH) {
-            /* recursivo executado quando e pequeno o suficiente
-               isso evita tempo explosivo no pior caso */ 
+               //recursivo executado quando e pequeno o suficiente
+               //isso evita tempo explosivo no pior caso 
             ops.reset();
             t0 = System.nanoTime();
             int lenRec = LcsAlgorithms.lcsRecursive(s1, s2, ops);
             long nanosRec = System.nanoTime() - t0;
             long opsRec = ops.get();
             if (lenRec != lenDp) {
-                /* consistencia adicional no caso recursivo */ 
+                //consistencia adicional no caso recursivo 
                 throw new IllegalStateException("lcs recursivo diverge no caso " + c.name());
             }
             recTime = formatMs(nanosRec);
             recOps = Long.toString(opsRec);
         } else {
-            /* recursivo nao executado
-               isso evita travar o processo de benchmark */ 
-            recTime = "n/a";
-            recOps = "n/a";
+            //recursivo nao executado
+            //isso evita travar o processo de benchmark 
+            recTime = "n/a"; //se o recursivo nao foi executado entao o tempo e n/a
+            recOps = "n/a"; //se o recursivo nao foi executado entao a contagem de operacoes e n/a
         }
+        return new Row(//cria a linha de resultados final, ela contem tempos e contagens de cada metodo 
 
-        /* cria a linha de resultados final
-           ela contem tempos e contagens de cada metodo */ 
-        return new Row(
                 c.name(),
                 m,
                 n,
@@ -146,15 +130,11 @@ public final class BenchmarkRunner {
                 Long.toString(opsMemo)
         );
     }
-
-    /* converte nanos em milissegundos com 6 casas
-       isso deixa a saida mais legivel */ 
-    private static String formatMs(long nanos) {
+    private static String formatMs(long nanos) { //converte nanos em milissegundos com 6 casas, isso deixa a saida mais legivel
         return String.format(Locale.ROOT, "%.6f", nanos / 1_000_000.0);
     }
-
-    /* imprime uma tabela bonita no terminal
-       a tabela lista um resumo por caso */ 
+    //imprime uma tabela bonita no terminal
+    //a tabela lista um resumo por caso 
     public static void printTable(List<Row> rows) {
         String headerFmt = "| %-10s | %4s | %4s | %3s | %12s | %10s | %12s | %10s | %12s | %10s |%n";
         String rowFmt = "| %-10s | %4d | %4d | %3d | %12s | %10s | %12s | %10s | %12s | %10s |%n";
@@ -173,9 +153,8 @@ public final class BenchmarkRunner {
         }
         System.out.println("-".repeat(120));
     }
-
-    /* escreve um csv no caminho indicado
-       serve para depois gerar graficos */ 
+    //escreve um csv no caminho indicado
+    //serve para depois gerar graficos 
     public static void writeCsv(Path path, List<Row> rows) throws IOException {
         Objects.requireNonNull(path, "path");
         Files.createDirectories(path.getParent() != null ? path.getParent() : Path.of("."));
@@ -195,9 +174,8 @@ public final class BenchmarkRunner {
         }
         Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
     }
-
-    /* trata escape basico de csv para campos que contm virgula ou aspas
-       se nao houver esses caracteres entao devolve como esta */ 
+    //trata escape basico de csv para campos que contm virgula ou aspas
+    //se nao houver esses caracteres entao devolve como esta 
     private static String csvEscape(String s) {
         if (s.indexOf(',') < 0 && s.indexOf('"') < 0) {
             return s;

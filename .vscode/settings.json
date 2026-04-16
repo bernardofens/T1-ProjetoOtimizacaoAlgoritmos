@@ -1,0 +1,15 @@
+{
+  "java.project.sourcePaths": [
+    "src/main/java",
+    "src/test/java"
+  ],
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.import.maven.enabled": true,
+  "java.project.referencedLibraries": [
+    "${userHome}/.m2/repository/org/junit/jupiter/junit-jupiter-api/**/junit-jupiter-api-*.jar",
+    "${userHome}/.m2/repository/org/junit/jupiter/junit-jupiter-engine/**/junit-jupiter-engine-*.jar",
+    "${userHome}/.m2/repository/org/junit/platform/junit-platform-commons/**/junit-platform-commons-*.jar",
+    "${userHome}/.m2/repository/org/opentest4j/opentest4j/**/opentest4j-*.jar",
+    "${userHome}/.m2/repository/org/apiguardian/apiguardian-api/**/apiguardian-api-*.jar"
+  ]
+}
