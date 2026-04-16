@@ -1,0 +1,40 @@
+==============================================
+  lcs — recursivo | dp (bottom-up) | memoização
+==============================================
+limiar recursivo: |s1|+|s2| <= 25 (acima: n/a)
+
+caso "classico" — strings: "ABCBDAB" e "BDCABA"
+  comprimento lcs: 4 | uma subsequência: "BCBA"
+  ---
+caso "iguais" — strings: "AAAA" e "AAAA"
+  comprimento lcs: 4 | uma subsequência: "AAAA"
+  ---
+caso "disjunto" — strings: "ABCD" e "EFGH"
+  comprimento lcs: 0 | uma subsequência: ""
+  ---
+caso "vazio" — strings: "" e "ABC"
+  comprimento lcs: 0 | uma subsequência: ""
+  ---
+caso "aggtab" — strings: "AGGTAB" e "GXTXAYB"
+  comprimento lcs: 4 | uma subsequência: "GTAB"
+  ---
+caso "prefixo" — strings: "abcdefghij" e "acegikmoq"
+  comprimento lcs: 5 | uma subsequência: "acegi"
+  ---
+caso "tema" — strings: "programacao" e "dinamica"
+  comprimento lcs: 4 | uma subsequência: "amca"
+  ---
+
+comparativo de desempenho (tempo em ms)
+------------------------------------------------------------------------------------------------------------------------
+| caso       | |s1| | |s2| | lcs |    t_rec(ms) |    ops_rec |     t_dp(ms) |     ops_dp |   t_memo(ms) |   ops_memo |
+------------------------------------------------------------------------------------------------------------------------
+| classico   |    7 |    6 |   4 |     0.033800 |        152 |     1.611000 |         42 |     0.026200 |         42 |
+| iguais     |    4 |    4 |   4 |     0.005500 |          5 |     0.008700 |         16 |     0.058700 |          5 |
+| disjunto   |    4 |    4 |   0 |     0.028400 |        139 |     0.006100 |         16 |     0.007200 |         33 |
+| vazio      |    0 |    3 |   0 |     0.038300 |          1 |     0.002000 |          0 |     0.002300 |          1 |
+| aggtab     |    6 |    7 |   4 |     0.056400 |        346 |     0.011300 |         42 |     0.013500 |         45 |
+| prefixo    |   10 |    9 |   5 |     1.933300 |      83726 |     0.021000 |         90 |     0.041900 |        176 |
+| tema       |   11 |    8 |   4 |     0.268500 |      15714 |     0.013800 |         88 |     0.023500 |        135 |
+------------------------------------------------------------------------------------------------------------------------
+csv gravado em: C:\Users\joxto\Downloads\T1-ProjetoOtimizacaoAlgoritmos\results\benchmark.csv

@@ -55,7 +55,31 @@ tempo medido com `System.nanoTime()` em torno de cada chamada, convertido para m
 
 ## 6. resultados experimentais
 
-*(preencha após executar na sua máquina — valores variam com cpu e carga.)*
+este repositorio inclui evidencias geradas automaticamente
+
+- log da execucao no terminal em `docs/evidencias/execucao_terminal.txt`
+- tabela em markdown em `docs/evidencias/execucao.md`
+- dados em csv em `results/benchmark.csv`
+
+para gerar novamente
+
+```text
+scripts\generate-evidence.bat
+```
+
+### 6.1 resultados coletados
+
+abaixo esta um recorte real do `results/benchmark.csv` gerado neste projeto
+
+| caso | len1 | len2 | lcs | t_rec_ms | ops_rec | t_dp_ms | ops_dp | t_memo_ms | ops_memo |
+|------|------|------|-----|----------|---------|---------|--------|-----------|----------|
+| classico | 7 | 6 | 4 | 0.023100 | 152 | 0.948400 | 42 | 0.032300 | 42 |
+| iguais | 4 | 4 | 4 | 0.001300 | 5 | 0.005100 | 16 | 0.016700 | 5 |
+| disjunto | 4 | 4 | 0 | 0.021400 | 139 | 0.004500 | 16 | 0.006400 | 33 |
+| vazio | 0 | 3 | 0 | 0.000500 | 1 | 0.001100 | 0 | 0.000900 | 1 |
+| aggtab | 6 | 7 | 4 | 0.038400 | 346 | 0.007900 | 42 | 0.008700 | 45 |
+| prefixo | 10 | 9 | 5 | 1.726700 | 83726 | 0.025000 | 90 | 0.028400 | 176 |
+| tema | 11 | 8 | 4 | 0.312200 | 15714 | 0.015000 | 88 | 0.024200 | 135 |
 
 1. rode `.\mvnw.cmd -q compile exec:java "-Dexec.args=--csv"`.
 2. copie a tabela do terminal ou importe `results/benchmark.csv`.
