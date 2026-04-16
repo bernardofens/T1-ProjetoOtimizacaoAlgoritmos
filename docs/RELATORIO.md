@@ -1,5 +1,7 @@
 # relatório: maior subsequência comum (lcs)
 
+**integrantes:** Bernardo Fensterseifer, Bernardo Klein Heitz, João Pedro Aiolfi, Rafael Toneto.
+
 ## 1. descrição do problema
 
 dadas duas sequências (aqui, strings) `s1` e `s2`, uma **subsequência** de `s1` obtém-se removendo zero ou mais símbolos sem alterar a ordem relativa dos restantes. a **maior subsequência comum** (lcs) é uma subsequência de `s1` que também é subsequência de `s2` e tem comprimento máximo possível.

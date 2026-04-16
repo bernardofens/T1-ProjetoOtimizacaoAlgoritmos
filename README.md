@@ -1,47 +1,32 @@
 # t1 — maior subsequência comum (lcs)
 
-trabalho de projeto e otimização de algoritmos: implementação recursiva, programação dinâmica (bottom-up), memoização (top-down), medição de tempo e contagem de operações, testes automatizados e relatório.
+**integrantes:** Bernardo Fensterseifer, Bernardo Klein Heitz, João Pedro Aiolfi, Rafael Toneto.
+
+implementação em java: lcs recursiva, programação dinâmica (bottom-up), memoização, benchmark de tempo e operações, testes junit. relatório em `docs/RELATORIO.md` (exportar para pdf conforme `docs/ENTREGA.md`).
 
 ## requisitos
 
 - java 17+
-- para build e testes: o script `mvnw` (maven wrapper) baixa o maven automaticamente na primeira execução
-
-## estrutura
-
-```
-├── pom.xml
-├── mvnw / mvnw.cmd
-├── src/main/java/com/poa/lcs/   — algoritmos, benchmark, main
-├── src/test/java/com/poa/lcs/   — junit 5
-├── docs/RELATORIO.md            — relatório técnico
-├── scripts/
-│   ├── run-all-tests.bat
-│   ├── run-all-tests.sh
-│   └── plot_benchmark.py          — gráfico opcional (matplotlib)
-└── results/                     — csv/png gerados localmente
-```
+- maven: use `mvnw` / `mvnw.cmd` na raiz 
 
 ## compilar e testar
+
+windows:
 
 ```text
 .\mvnw.cmd clean test
 ```
 
-ou apenas testes:
+ou `scripts\run-all-tests.bat`.
 
-```text
-scripts\run-all-tests.bat
-```
-
-em unix:
+linux/mac:
 
 ```text
 chmod +x mvnw scripts/run-all-tests.sh
 ./scripts/run-all-tests.sh
 ```
 
-## executar a demonstração
+## executar
 
 casos embutidos:
 
@@ -49,28 +34,30 @@ casos embutidos:
 .\mvnw.cmd -q compile exec:java
 ```
 
-dois argumentos (um par de strings):
+duas strings:
 
 ```text
 .\mvnw.cmd -q compile exec:java "-Dexec.args=ABCBDAB BDCABA"
 ```
 
-gravar `results/benchmark.csv` após a execução:
+sem maven (windows): `scripts\run.bat`
+
+## benchmark (csv)
 
 ```text
-.\mvnw.cmd -q compile exec:java "-Dexec.args=--csv"
+.\mvnw.cmd -q exec:java "-Dexec.args=--csv"
 ```
 
-## gráfico comparativo (opcional)
+grava `results/benchmark.csv`. se `|s1|+|s2| > 25`, o recursivo não corre no benchmark (`n/a` na tabela).
 
-1. gere o csv com o comando acima
-2. `pip install matplotlib` (se necessário)
-3. `python scripts/plot_benchmark.py` — cria `results/tempo_por_tamanho.png`
+## evidências para o relatório
 
-## limiar do recursivo
+windows: `scripts\generate-evidence.bat` (saída em `docs\evidencias\` e csv em `results\`).
 
-se `|s1| + |s2| > 25`, o benchmark não executa o método recursivo (evita explosão de tempo); a célula aparece como `n/a` no csv e na tabela.
+## gráfico (opcional)
 
-## documentação
+com csv gerado: `pip install matplotlib` e `python scripts/plot_benchmark.py` → `results/tempo_por_tamanho.png`
 
-ver [docs/RELATORIO.md](docs/RELATORIO.md) para definição do problema, complexidade, implementação e análise comparativa.
+## entrega
+
+lista de ficheiros e zip: `docs/ENTREGA.md`.

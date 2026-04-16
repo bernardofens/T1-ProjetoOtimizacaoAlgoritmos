@@ -1,5 +1,4 @@
 # evidencias de execucao
-
 este arquivo contem um exemplo real de execucao do programa
 
 ## comando usado
@@ -12,30 +11,30 @@ este arquivo contem um exemplo real de execucao do programa
 
 ```text
 ==============================================
-  lcs � recursivo | dp (bottom-up) | memoiza��o
+lcs recursivo | dp (bottom-up) | memoização
 ==============================================
 limiar recursivo: |s1|+|s2| <= 25 (acima: n/a)
 
-caso "classico" � strings: "ABCBDAB" e "BDCABA"
-  comprimento lcs: 4 | uma subsequ�ncia: "BCBA"
+caso "classico" strings: "ABCBDAB" e "BDCABA"
+  comprimento lcs: 4 | uma subsequencia: "BCBA"
   ---
-caso "iguais" � strings: "AAAA" e "AAAA"
-  comprimento lcs: 4 | uma subsequ�ncia: "AAAA"
+caso "iguais" strings: "AAAA" e "AAAA"
+  comprimento lcs: 4 | uma subsequencia: "AAAA"
   ---
-caso "disjunto" � strings: "ABCD" e "EFGH"
-  comprimento lcs: 0 | uma subsequ�ncia: ""
+caso "disjunto" strings: "ABCD" e "EFGH"
+  comprimento lcs: 0 | uma subsequencia: ""
   ---
-caso "vazio" � strings: "" e "ABC"
-  comprimento lcs: 0 | uma subsequ�ncia: ""
+caso "vazio" strings: "" e "ABC"
+  comprimento lcs: 0 | uma subsequencia: ""
   ---
-caso "aggtab" � strings: "AGGTAB" e "GXTXAYB"
-  comprimento lcs: 4 | uma subsequ�ncia: "GTAB"
+caso "aggtab" strings: "AGGTAB" e "GXTXAYB"
+  comprimento lcs: 4 | uma subsequencia: "GTAB"
   ---
-caso "prefixo" � strings: "abcdefghij" e "acegikmoq"
-  comprimento lcs: 5 | uma subsequ�ncia: "acegi"
+caso "prefixo" strings: "abcdefghij" e "acegikmoq"
+  comprimento lcs: 5 | uma subsequencia: "acegi"
   ---
-caso "tema" � strings: "programacao" e "dinamica"
-  comprimento lcs: 4 | uma subsequ�ncia: "amca"
+caso "tema" strings: "programacao" e "dinamica"
+  comprimento lcs: 4 | uma subsequencia: "amca"
   ---
 
 comparativo de desempenho (tempo em ms)
@@ -50,8 +49,6 @@ comparativo de desempenho (tempo em ms)
 | prefixo    |   10 |    9 |   5 |     1.726700 |      83726 |     0.025000 |         90 |     0.028400 |        176 |
 | tema       |   11 |    8 |   4 |     0.312200 |      15714 |     0.015000 |         88 |     0.024200 |        135 |
 ------------------------------------------------------------------------------------------------------------------------
-csv gravado em: c:\users\joxto\downloads\t1-projetootimizacaoalgoritmos\results\benchmark.csv
-```
 
 observacao
 
