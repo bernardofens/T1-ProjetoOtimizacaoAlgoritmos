@@ -2,7 +2,7 @@
 
 **integrantes:** Bernardo Fensterseifer, Bernardo Klein Heitz, João Pedro Aiolfi, Rafael Toneto.
 
-implementação em java: lcs recursiva, programação dinâmica (bottom-up), memoização, benchmark de tempo e operações, testes junit. relatório em `docs/RELATORIO.md` (exportar para pdf conforme `docs/ENTREGA.md`).
+implementação em java: lcs recursiva, programação dinâmica (bottom-up), memoização, benchmark de tempo e operações, testes junit e relatório em pdf
 
 ## requisitos
 
