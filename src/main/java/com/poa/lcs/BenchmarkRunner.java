@@ -7,7 +7,7 @@ import java.util.ArrayList; //lista de casos
 import java.util.List; //lista de resultados
 import java.util.Locale; //localizacao
 import java.util.Objects; //objetos
-//benchmark runner -> classe que organiza uma bateria de casos para testar os algoritmos
+//benchmark runner classe que organiza uma bateria de casos para testar os algoritmos
    //esta classe organiza uma bateria de casos
    //para cada caso ela executa lcs recursivo lcs dp e lcs memo
    //depois imprime uma tabela no terminal
@@ -22,35 +22,31 @@ public final class BenchmarkRunner {
     public record Case(String name, String s1, String s2) {
     }
     //estrutura para uma linha de resultados do benchmark
-   //cada cam   po guarda um dado para imprimir e salvar no csv
-    public record Row(
-            String name,
-            int len1,
-            int len2,
-            int lcsLength,
-            String recursiveTime,
-            String recursiveOps,
-            String dpTime,
-            String dpOps,
-            String memoTime,
-            String memoOps
+   //cada cam  po guarda um dado para imprimir e salvar no csv
+    public record Row( 
+            String name,                //nome do caso
+            int len1,             //tamanho da primeira string
+            int len2,             //tamanho da segunda string
+            int lcsLength,             //comprimento da lcs
+            String recursiveTime,             //tempo do recursivo
+            String recursiveOps,          //contagem de operacoes do recursivo
+            String dpTime,                   //tempo do dp
+            String dpOps,             //contagem de operacoes do dp
+            String memoTime,             //tempo do memo
+            String memoOps             //contagem de operacoes do memo
     ) {
     }
-    //construtor privado
-    //this e utilitaria e evita instanciacao acidental
     private BenchmarkRunner() {
     }
-    //retorna uma lista fixa de casos
-       //serve para executar sem precisar passar argumentos na linha de comando 
     public static List<Case> defaultCases() {
         List<Case> list = new ArrayList<>();
-        list.add(new Case("classico", "ABCBDAB", "BDCABA"));
-        list.add(new Case("iguais", "AAAA", "AAAA"));
-        list.add(new Case("disjunto", "ABCD", "EFGH"));
-        list.add(new Case("vazio", "", "ABC"));
-        list.add(new Case("aggtab", "AGGTAB", "GXTXAYB"));
-        list.add(new Case("prefixo", "abcdefghij", "acegikmoq"));
-        list.add(new Case("tema", "programacao", "dinamica"));
+        list.add(new Case("classico", "ABCBDAB", "BDCABA"));           //caso classico
+        list.add(new Case("iguais", "AAAA", "AAAA"));                   //caso iguais
+        list.add(new Case("disjunto", "ABCD", "EFGH"));                //caso disjunto
+        list.add(new Case("vazio", "", "ABC"));                           //caso vazio
+        list.add(new Case("aggtab", "AGGTAB", "GXTXAYB"));             //caso aggtab
+        list.add(new Case("prefixo", "abcdefghij", "acegikmoq"));         //caso prefixo
+        list.add(new Case("tema", "programacao", "dinamica"));           //caso tema
         return list;
     }
     //executa todos os casos recebidos e devolve uma lista de linhas
@@ -70,25 +66,26 @@ public final class BenchmarkRunner {
         String s1 = c.s1();
         String s2 = c.s2();
         //m e n sao os tamanhos das strings
-        //isso ajuda a decidir se o recursivo pode ser executado 
-        int m = s1.length();
+        //decidir se o recursivo pode ser executado 
+        int m = s1.length(); 
         int n = s2.length();
         //calcula dp primeiro
-        //dp e sempre executado porque tem complexidade previsivel 
+        //dp e sempre executado pq tem complexidade previsivel o(m*n)
         ops.reset();
         long t0 = System.nanoTime();
         int lenDp = LcsAlgorithms.lcsDp(s1, s2, ops);
         long nanosDp = System.nanoTime() - t0;
         long opsDp = ops.get();
         //calcula memo segundo
-        //memo deve devolver a mesma lcs comprimento que dp 
+        //memo deve devolver o mesmo comprimento de lcs que dp 
         ops.reset();
         t0 = System.nanoTime();
         int lenMemo = LcsAlgorithms.lcsMemo(s1, s2, ops);
         long nanosMemo = System.nanoTime() - t0;
         long opsMemo = ops.get();
         //validacao de consistencia
-        //se dp e memo divergem entao ha um erro logico 
+        //se dp e memo divergem 
+        // entao ha um erro logico 
         if (lenMemo != lenDp) {
             throw new IllegalStateException("lcs dp e memo divergem no caso " + c.name());
         }
@@ -112,31 +109,35 @@ public final class BenchmarkRunner {
             recOps = Long.toString(opsRec);
         } else {
             //recursivo nao executado
-            //isso evita travar o processo de benchmark 
-            recTime = "n/a"; //se o recursivo nao foi executado entao o tempo e n/a
-            recOps = "n/a"; //se o recursivo nao foi executado entao a contagem de operacoes e n/a
+            // evita travar o processo de benchmark 
+            recTime = "n/a";      //se o recursivo nao foi executado 
+            // entao o tempo e n/a
+            recOps = "n/a"; //se o recursivo nao foi executado 
+            // entao a contagem de operacoes e n/a
         }
-        return new Row(//cria a linha de resultados final, ela contem tempos e contagens de cada metodo 
+        return new Row(//cria a linha de resultados final
+            // ela contem tempos e contagens de cada metodo 
 
-                c.name(),
-                m,
-                n,
-                lenDp,
-                recTime,
-                recOps,
-                formatMs(nanosDp),
-                Long.toString(opsDp),
-                formatMs(nanosMemo),
-                Long.toString(opsMemo)
+                c.name(), 
+                m,             //tamanho da primeira string
+                n,            //tamanho da segunda string
+                lenDp,         //comprimento da lcs
+                recTime,          //tempo do recursivo
+                recOps,                //contagem de operacoes do recursivo
+                formatMs(nanosDp),         //tempo do dp
+                Long.toString(opsDp),     //contagem de operacoes do dp
+                formatMs(nanosMemo),    //tempo do memo
+                Long.toString(opsMemo)   //contagem de operacoes do memo
         );
     }
-    private static String formatMs(long nanos) { //converte nanos em milissegundos com 6 casas, isso deixa a saida mais legivel
+    private static String formatMs(long nanos) { //converte nanos em milissegundos com 6 casas
+        //deixa a saida mais legivel
         return String.format(Locale.ROOT, "%.6f", nanos / 1_000_000.0);
     }
-    //imprime uma tabela bonita no terminal
+         //imprime uma tabela bonita no terminal
     //a tabela lista um resumo por caso 
-    public static void printTable(List<Row> rows) {
-        String headerFmt = "| %-10s | %4s | %4s | %3s | %12s | %10s | %12s | %10s | %12s | %10s |%n";
+    public static void printTable(List<Row> rows) {    //imprime a tabela no terminal
+        String headerFmt = "| %-10s | %4s | %4s | %3s | %12s | %10s | %12s | %10s | %12s | %10s |%n"; 
         String rowFmt = "| %-10s | %4d | %4d | %3d | %12s | %10s | %12s | %10s | %12s | %10s |%n";
         System.out.println();
         System.out.println("comparativo de desempenho (tempo em ms)");
@@ -145,41 +146,43 @@ public final class BenchmarkRunner {
                 "caso", "|s1|", "|s2|", "lcs", "t_rec(ms)", "ops_rec", "t_dp(ms)", "ops_dp", "t_memo(ms)", "ops_memo");
         System.out.println("-".repeat(120));
         for (Row r : rows) {
-            System.out.printf(Locale.ROOT, rowFmt,
-                    r.name(), r.len1(), r.len2(), r.lcsLength(),
-                    r.recursiveTime(), r.recursiveOps(),
-                    r.dpTime(), r.dpOps(),
-                    r.memoTime(), r.memoOps());
+            System.out.printf(Locale.ROOT, rowFmt,         //imprime a linha do csv
+                    r.name(), r.len1(), r.len2(), r.lcsLength(),       //nome do caso, tamanho da primeira string, tamanho da segunda string, comprimento da lcs
+                    r.recursiveTime(), r.recursiveOps(),     //tempo do recursivo, contagem de operacoes do recursivo
+                    r.dpTime(), r.dpOps(),             //tempo do dp, contagem de operacoes do dp
+                    r.memoTime(), r.memoOps());            //tempo do memo, contagem de operacoes do memo
         }
-        System.out.println("-".repeat(120));
+        System.out.println("-".repeat(120)); 
     }
-    //escreve um csv no caminho indicado
-    //serve para depois gerar graficos 
-    public static void writeCsv(Path path, List<Row> rows) throws IOException {
-        Objects.requireNonNull(path, "path");
-        Files.createDirectories(path.getParent() != null ? path.getParent() : Path.of("."));
-        StringBuilder sb = new StringBuilder();
-        sb.append("caso,len1,len2,lcs,t_rec_ms,ops_rec,t_dp_ms,ops_dp,t_memo_ms,ops_memo\n");
+         //escreve um csv no caminho indicado
+    //serve para depois gerar graficos
+    //caso nao haja parentes o caminho e criado automaticamente
+    public static void writeCsv(Path path, List<Row> rows) throws IOException { 
+        Objects.requireNonNull(path, "path"); //verifica se o caminho nao e nulo
+        Files.createDirectories(path.getParent() != null ? path.getParent() : Path.of(".")); //cria o diretorio do csv
+        StringBuilder sb = new StringBuilder(); //constroi a string do csv
+        sb.append("caso,len1,len2,lcs,t_rec_ms,ops_rec,t_dp_ms,ops_dp,t_memo_ms,ops_memo\n");  //cabecalho do csv
         for (Row r : rows) {
-            sb.append(csvEscape(r.name())).append(',')
-                    .append(r.len1()).append(',')
-                    .append(r.len2()).append(',')
-                    .append(r.lcsLength()).append(',')
-                    .append(r.recursiveTime()).append(',')
-                    .append(r.recursiveOps()).append(',')
-                    .append(r.dpTime()).append(',')
-                    .append(r.dpOps()).append(',')
-                    .append(r.memoTime()).append(',')
-                    .append(r.memoOps()).append('\n');
+            sb.append(csvEscape(r.name())).append(',')      //escapa o nome do caso
+                    .append(r.len1()).append(',')   //tamanho da primeira string
+                    .append(r.len2()).append(',')      //tamanho da segunda string
+                    .append(r.lcsLength()).append(',')         //comprimento da lcs
+                    .append(r.recursiveTime()).append(',')   //tempo do recursivo
+                    .append(r.recursiveOps()).append(',')    //contagem de operacoes do recursivo
+                    .append(r.dpTime()).append(',')               //tempo do dp
+                    .append(r.dpOps()).append(',')            //contagem de operacoes do dp
+                    .append(r.memoTime()).append(',')          //tempo do memo
+                    .append(r.memoOps()).append('\n');      //contagem de operacoes do memo
         }
-        Files.writeString(path, sb.toString(), StandardCharsets.UTF_8);
+        Files.writeString(path, sb.toString(), StandardCharsets.UTF_8); //escreve o csv no arquivo
     }
-    //trata escape basico de csv para campos que contm virgula ou aspas
-    //se nao houver esses caracteres entao devolve como esta 
+          //trata escape basico de csv para campos que contm virgula ou aspas
+    //se nao houver esses caracteres 
+    // entao devolve como esta 
     private static String csvEscape(String s) {
-        if (s.indexOf(',') < 0 && s.indexOf('"') < 0) {
+        if (s.indexOf(',') < 0 && s.indexOf('"') < 0) { 
             return s;
         }
-        return '"' + s.replace("\"", "\"\"") + '"';
+        return '"' + s.replace("\"", "\"\"") + '"'; 
     }
 }

@@ -1,7 +1,5 @@
 package com.poa.lcs;
-//arquivo principal
-   //este arquivo nao implementa o algoritmo em si
-   //ele apenas organiza a execucao e a saida no terminal */
+// main
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +22,14 @@ public final class Main {//classe que coordena os exemplos e o benchmark
         }
         List<BenchmarkRunner.Case> cases;  //lista de casos que o benchmark vai executar
         if (rest.size() >= 2) {
-            //se o usuario passou dois argumentos entao trata como s1 e s2
+            //se o usuario passou dois argumentos 
+                  // entao trata como s1 e s2
             String s1 = rest.get(0);
             String s2 = rest.get(1);
             cases = List.of(new BenchmarkRunner.Case("cli", s1, s2));
         } else {
-            //se nao passou entao usa casos embutidos para facilitar
+            //se nao passou 
+            // entao usa casos embutidos para facilitar
             cases = BenchmarkRunner.defaultCases();
         }
         //cabecalho para tornar a saida legivel
@@ -57,7 +57,7 @@ public final class Main {//classe que coordena os exemplos e o benchmark
                 BenchmarkRunner.writeCsv(out, rows);//escreve o csv com os dados do benchmark
                 System.out.println("csv gravado em: " + out.toAbsolutePath());
             } catch (Exception e) {
-                System.err.println("falha ao gravar csv: " + e.getMessage());//mensagem de erro sem interromper todo o programa 
+                System.err.println("falha ao gravar csv: " + e.getMessage());//mensagem de erro sem interromper o programa 
             }
         }
     }

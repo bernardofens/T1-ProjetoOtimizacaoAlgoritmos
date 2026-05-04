@@ -6,12 +6,13 @@ rem isso roda o benchmark e salva a saida do terminal em docs\evidencias
 
 cd /d "%~dp0.."
 
-if not exist "docs\evidencias" (
-  mkdir "docs\evidencias"
+if not exist "docs\evidencias" ( 
+  mkdir "docs\evidencias" 
 )
 
-call mvnw.cmd -q -DskipTests compile exec:java "-Dexec.args=--csv" > "docs\evidencias\execucao_terminal.txt"
-if errorlevel 1 exit /b 1
+# roda o benchmark e salva a saida do terminal em docs\evidencias
+call mvnw.cmd -q -DskipTests compile exec:java "-Dexec.args=--csv" > "docs\evidencias\execucao_terminal.txt"  
+if errorlevel 1 exit /b 1 
 
 echo.
 echo evidencias geradas em docs\evidencias

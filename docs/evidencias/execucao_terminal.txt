@@ -1,0 +1,40 @@
+==============================================
+  lcs — recursivo | dp (bottom-up) | memoização
+==============================================
+limiar recursivo: |s1|+|s2| <= 25 (acima: n/a)
+
+caso "classico" — strings: "ABCBDAB" e "BDCABA"
+  comprimento lcs: 4 | uma subsequência: "BCBA"
+  ---
+caso "iguais" — strings: "AAAA" e "AAAA"
+  comprimento lcs: 4 | uma subsequência: "AAAA"
+  ---
+caso "disjunto" — strings: "ABCD" e "EFGH"
+  comprimento lcs: 0 | uma subsequência: ""
+  ---
+caso "vazio" — strings: "" e "ABC"
+  comprimento lcs: 0 | uma subsequência: ""
+  ---
+caso "aggtab" — strings: "AGGTAB" e "GXTXAYB"
+  comprimento lcs: 4 | uma subsequência: "GTAB"
+  ---
+caso "prefixo" — strings: "abcdefghij" e "acegikmoq"
+  comprimento lcs: 5 | uma subsequência: "acegi"
+  ---
+caso "tema" — strings: "programacao" e "dinamica"
+  comprimento lcs: 4 | uma subsequência: "amca"
+  ---
+
+comparativo de desempenho (tempo em ms)
+------------------------------------------------------------------------------------------------------------------------
+| caso       | |s1| | |s2| | lcs |    t_rec(ms) |    ops_rec |     t_dp(ms) |     ops_dp |   t_memo(ms) |   ops_memo |
+------------------------------------------------------------------------------------------------------------------------
+| classico   |    7 |    6 |   4 |     0.023800 |        152 |     0.588700 |         42 |     0.033000 |         42 |
+| iguais     |    4 |    4 |   4 |     0.000900 |          5 |     0.004600 |         16 |     0.013600 |          5 |
+| disjunto   |    4 |    4 |   0 |     0.020400 |        139 |     0.003700 |         16 |     0.005500 |         33 |
+| vazio      |    0 |    3 |   0 |     0.000300 |          1 |     0.000900 |          0 |     0.000600 |          1 |
+| aggtab     |    6 |    7 |   4 |     0.034100 |        346 |     0.006100 |         42 |     0.007000 |         45 |
+| prefixo    |   10 |    9 |   5 |     1.408500 |      83726 |     0.011700 |         90 |     0.026200 |        176 |
+| tema       |   11 |    8 |   4 |     0.345300 |      15714 |     0.013300 |         88 |     0.025500 |        135 |
+------------------------------------------------------------------------------------------------------------------------
+csv gravado em: F:\Game Projects\Godot 4\T1-ProjetoOtimizacaoAlgoritmos\results\benchmark.csv
