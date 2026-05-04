@@ -21,12 +21,12 @@ class LcsAlgorithmsTest {
         assertEquals(expected, LcsAlgorithms.lcsMemo(s1, s2, ops), "memo"); //executa memo e compara com esperado
     }
     //caso com strings vazias
-    //a lcs nao tem elementos comuns e portanto tem tamanho zero
+       //a lcs nao tem elementos comuns e portanto tem tamanho zero
     @Test
     void vazias() {
-        assertAllEqual("", "", 0); //caso com strings vazias
-        assertAllEqual("", "abc", 0); //caso com string vazia e string nao vazia
-        assertAllEqual("x", "", 0); //caso com string nao vazia e string vazia
+        assertAllEqual("", "", 0);          //caso com strings vazias
+        assertAllEqual("", "abc", 0);          //caso com string vazia e string nao vazia
+        assertAllEqual("x", "", 0);          //caso com string nao vazia e string vazia
     }
     //caso em que as duas strings sao iguais
     //a lcs maxima e a propria string
@@ -41,18 +41,18 @@ class LcsAlgorithmsTest {
         assertAllEqual("abcd", "efgh", 0); //caso com strings sem intersecao
     }
     //caso classico usado em muitos materiais sobre lcs
-    //o comprimento esperado e 4
+          //o comprimento esperado e 4
     @Test
     void classico() {
         assertAllEqual("ABCBDAB", "BDCABA", 4); //caso classico
     }
-    //caso simples em que existe apenas um caractere comum
+       //caso simples em que existe apenas um caractere comum
     @Test
     void umCaractereComum() {
         assertAllEqual("a", "bbbbba", 1); //caso com um caractere comum
     }
     //caso medio com padroes
-    //aqui o teste valida que dp memo e recursivo concordam
+       //aqui o teste valida que dp memo e recursivo concordam
     @Test
     void medioPrefixoEAlternancia() {
         String s1 = "prefixo_comum_xyz"; //cria s1 com um prefixo comum e alternancia
