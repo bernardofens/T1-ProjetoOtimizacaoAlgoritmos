@@ -1,9 +1,13 @@
 target/
+out/
 .idea/
 *.iml
 .classpath
 .project
 .settings/
+.vscode/
 results/*.csv
 results/*.png
 !results/.gitkeep
+docs/evidencias/execucao_terminal.txt
+docs/RELATORIO.pdf
