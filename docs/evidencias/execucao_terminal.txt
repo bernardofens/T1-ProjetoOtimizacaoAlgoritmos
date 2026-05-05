@@ -1,52 +1,28 @@
-# evidencias de execucao
-
-este arquivo contem um exemplo real de execucao do programa.
-
-## comando usado
-
-```text
-scripts\generate-evidence.bat
-```
-
-isso gera:
-
-- `docs/evidencias/execucao_terminal.txt`
-- `results/benchmark.csv`
-
-comando maven equivalente:
-
-```text
-.\mvnw.cmd -q -DskipTests compile exec:java "-Dexec.args=--csv"
-```
-
-## saida de exemplo do terminal
-
-```text
 ==============================================
-  lcs — recursivo | dp (bottom-up) | memoização
+  lcs ? recursivo | dp (bottom-up) | memoizacao
 ==============================================
 limiar recursivo: |s1|+|s2| <= 25 (acima: n/a)
 
-caso "classico" — strings: "ABCBDAB" e "BDCABA"
-  comprimento lcs: 4 | uma subsequência: "BCBA"
+caso "classico" ? strings: "ABCBDAB" e "BDCABA"
+  comprimento lcs: 4 | uma subsequencia: "BCBA"
   ---
-caso "iguais" — strings: "AAAA" e "AAAA"
-  comprimento lcs: 4 | uma subsequência: "AAAA"
+caso "iguais" ? strings: "AAAA" e "AAAA"
+  comprimento lcs: 4 | uma subsequencia: "AAAA"
   ---
-caso "disjunto" — strings: "ABCD" e "EFGH"
-  comprimento lcs: 0 | uma subsequência: ""
+caso "disjunto" ? strings: "ABCD" e "EFGH"
+  comprimento lcs: 0 | uma subsequencia: ""
   ---
-caso "vazio" — strings: "" e "ABC"
-  comprimento lcs: 0 | uma subsequência: ""
+caso "vazio" ? strings: "" e "ABC"
+  comprimento lcs: 0 | uma subsequencia: ""
   ---
-caso "aggtab" — strings: "AGGTAB" e "GXTXAYB"
-  comprimento lcs: 4 | uma subsequência: "GTAB"
+caso "aggtab" ? strings: "AGGTAB" e "GXTXAYB"
+  comprimento lcs: 4 | uma subsequencia: "GTAB"
   ---
-caso "prefixo" — strings: "abcdefghij" e "acegikmoq"
-  comprimento lcs: 5 | uma subsequência: "acegi"
+caso "prefixo" ? strings: "abcdefghij" e "acegikmoq"
+  comprimento lcs: 5 | uma subsequencia: "acegi"
   ---
-caso "tema" — strings: "programacao" e "dinamica"
-  comprimento lcs: 4 | uma subsequência: "amca"
+caso "tema" ? strings: "programacao" e "dinamica"
+  comprimento lcs: 4 | uma subsequencia: "amca"
   ---
 
 comparativo de desempenho (tempo em ms)
@@ -62,6 +38,3 @@ comparativo de desempenho (tempo em ms)
 | tema       |   11 |    8 |   4 |     0.137750 |      15714 |     0.006584 |         88 |     0.007459 |        135 |
 ------------------------------------------------------------------------------------------------------------------------
 csv gravado em: F:\Game Projects\Godot 4\T1-ProjetoOtimizacaoAlgoritmos\results\benchmark.csv
-```
-
-observacao: os tempos podem variar entre execucoes e maquinas, mas os comprimentos da lcs e as contagens de operacoes devem permanecer consistentes para os mesmos casos.
